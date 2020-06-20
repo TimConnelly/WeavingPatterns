@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clickable Grid</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="grid.css"/>
+    <style>
+      body{
+       display:-webkit-box;
+    display:-webkit-flex;
+    display:-ms-flexbox;
+    display:flex;
+      }
+      svg{ 
+        margin: auto;
+      }
+        #button{
+          cursor: pointer;
+        }
+        .graphe_container{
+         -moz-transform-origin: 160px 160px;
+          -ms-transform-origin:  160px 160px;
+          -o-transform-origin: 160px 160px;
+          -webkit-transform-origin:  160px 160px;
+          transform-origin: 160px 160px;
+        }
+        rect,circle{
+          user-select: none;
+          -webkit-user-select:none;
+          -moz-user-select:none;
+        }
+      </style>
+  </head>
+  <body>
+    <div id="colorpicker"></div>
+    <div id="grid"></div>
+    <div id="picker"></div>
+    <script type="text/javascript" src="grid.js"></script>
+    <script type="text/javascript" src="picker.js"></script>
+  </body>
+</html>
