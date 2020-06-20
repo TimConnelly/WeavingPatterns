@@ -144,13 +144,13 @@ function buttonClicked() {
   toggle_palet();
   toggle_cirle();
   toggle_text_graphe();
-  show_choosed_bar();
+  show_chosen_bar();
 };
 
 
 
 
-function show_choosed_bar() {
+function show_chosen_bar() {
   var last_g = colors.length - 1;
   var last_color = colors[colors.length - 1];
   var p_color = d3.select('#button_show_color').attr('fill');
