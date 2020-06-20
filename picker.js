@@ -64,7 +64,7 @@ function mouseClick() {
   d3.select('#button_show_color').attr('fill', p_color);
 
   c_color = d3.select(this).attr('fill');
-  choosed_palet.addColor(c_color);
+  chosen_palet.addColor(c_color);
 
 }
 
@@ -256,7 +256,7 @@ open_palet();
 
 
 
-var choosed_palet = {
+var chosen_palet = {
   container: d3.select('svg').append('g').attr('class', 'choosed_palet'),
   x: 50,
   y: 450,
@@ -289,10 +289,13 @@ var choosed_palet = {
         .attr('height', this.height)
         .attr('fill', this.color[i])
         .on('mouseover', mouseover)
+        .on('click', function () {
+          c_color = d3.select(this).attr('fill');
+        })
         .on('dblclick', function () {
           var el = d3.select(this);
           var index = el.attr("data_color_index");
-          choosed_palet.removeColor(index);
+          chosen_palet.removeColor(index);
           el.remove();
 
         });
