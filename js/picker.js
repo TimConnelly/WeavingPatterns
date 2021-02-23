@@ -1,9 +1,9 @@
-var svg = d3.select('body').append('svg')
-  .attr('width', 320)
-  .attr('height', 600);
+var svg = d3.select('#picker').append('svg')
+  .attr('width', 600)
+  .attr('height', 300);
 
-var x1 = 160,
-  y1 = 150;
+var x1 = 10,
+  y1 = 10;
 var c_color;
 var color_is_choosed = false;
 var colors = [
@@ -24,8 +24,8 @@ function deg_color(color) {
   ]
 
 }
-function draw_palet() {
 
+function draw_palet() {
 
   var palet_container = d3.select('svg').append('g').attr('id', 'palet_container');
 
@@ -37,16 +37,16 @@ function draw_palet() {
       .attr('class', 'graphe_container');
 
 
-    drawRect('#graphe_container' + i, x1, y1, 5, 5, 145, 20, '#fff', '#ccc');
-    drawRect('#graphe_container' + i, x1 + 25, y1, 4, 4, 20, 20, deg_color(colors[i])[0], '', '', 'color_rect color_rect0');
-    drawRect('#graphe_container' + i, x1 + 50, y1, 4, 4, 20, 20, deg_color(colors[i])[1], '', '', 'color_rect color_rect1');
-    drawRect('#graphe_container' + i, x1 + 75, y1, 4, 4, 20, 20, deg_color(colors[i])[2], '', '', 'color_rect color_rect2');
-    drawRect('#graphe_container' + i, x1 + 100, y1, 4, 4, 20, 20, deg_color(colors[i])[3], '', '', 'color_rect color_rect3');
-    drawRect('#graphe_container' + i, x1 + 125, y1, 4, 4, 20, 20, deg_color(colors[i])[4], '', '', 'color_rect color_rect4');
+    drawRect('#graphe_container' + i, x1 + i*25, y1, 5, 5, 20, 130, '#fff', '#ccc');
+    drawRect('#graphe_container' + i, x1 + i*25, y1 + 5, 4, 4, 20, 20, deg_color(colors[i])[0], '', '', 'color_rect color_rect0');
+    drawRect('#graphe_container' + i, x1 + i*25, y1 + 30, 4, 4, 20, 20, deg_color(colors[i])[1], '', '', 'color_rect color_rect1');
+    drawRect('#graphe_container' + i, x1 + i*25, y1 + 55, 4, 4, 20, 20, deg_color(colors[i])[2], '', '', 'color_rect color_rect2');
+    drawRect('#graphe_container' + i, x1 + i*25, y1 + 80, 4, 4, 20, 20, deg_color(colors[i])[3], '', '', 'color_rect color_rect3');
+    drawRect('#graphe_container' + i, x1 + i*25, y1 + 105, 4, 4, 20, 20, deg_color(colors[i])[4], '', '', 'color_rect color_rect4');
 
 
   }
-  drawButton();
+  // drawButton();
   d3.selectAll('.color_rect').on('mouseover', mouseover);
   d3.selectAll('.color_rect').on('click', mouseClick);
 }
@@ -99,7 +99,6 @@ function drawGrapheText(x, y, id = null, value, s_color) {
 
 function drawCircle(container, x, y, r, color = null, id = null) {
 
-
   var ele = d3.select('svg').append('g');
 
   ele.append('circle')
@@ -130,25 +129,14 @@ function drawRect(container, x, y, rx, ry, width, height, color = null, stroke =
     .attr('width', width)
     .attr('height', height);
 }
-function drawButton() {
 
-
-  drawCircle('svg', x1, y1 + 10, 15, colors[colors.length - 1], id = "button_show_color");
-  drawCircle('svg', x1, y1 + 10, 10, 'orange');
-  drawCircle('svg', x1, y1 + 10, 9, 'white', id = "button");
-  d3.select('#button').on('click', buttonClicked);
-}
 
 function buttonClicked() {
   // toggle_color('#button');
-  toggle_palet();
   toggle_cirle();
   toggle_text_graphe();
   show_chosen_bar();
 };
-
-
-
 
 function show_chosen_bar() {
   var last_g = colors.length - 1;
@@ -168,14 +156,7 @@ function show_chosen_bar() {
       d3.selectAll('#graphe_container' + last_g + '>.color_rect' + i).attr('fill', deg_color(p_color)[i]);
     }
   }
-
-
 }
-
-
-
-
-
 
 function toggle_color(el) {
   var element = d3.select(el);
@@ -187,8 +168,8 @@ function toggle_color(el) {
   }
 }
 
-drawCircle('circle', x1, y1 + 230, 50, '#ccc', id = 'show_circle');
-drawGrapheText(x1 + 70, y1 + 200, 'color_code', '#cccccc', '#ccc');
+drawCircle('circle', x1+60, y1 + 200, 50, '#ccc', id = 'show_circle');
+drawGrapheText(x1 + 130, y1 + 170, 'color_code', '#cccccc', '#ccc');
 
 function toggle_cirle() {
 
@@ -212,17 +193,7 @@ function toggle_text_graphe() {
     text_graphe.transition().duration(500).attr("transform", "translate(0," + -150 + ")");
   }
 }
-function open_palet() {
-  var step = 18;
-  d3.select('svg').attr('data-palet', 'on');
 
-  for (var i = 0; i < colors.length; i++) {
-    d3.select('#graphe_container' + i)
-      .transition()
-      .duration(500).attr("transform", 'rotate(' + i * step + ' )');
-  }
-
-}
 function close_palet() {
 
   var el = d3.selectAll('.graphe_container');
@@ -233,33 +204,15 @@ function close_palet() {
 
 
 }
-function toggle_palet() {
-
-  if (palet.attr('data-palet') == 'on') {
-    close_palet();
-
-    palet.attr('data-palet', 'off');
-  } else {
-    open_palet();
-    palet.attr('data-palet', 'on');
-  }
-}
-
 
 
 draw_palet();
-open_palet();
-
-
-
-
-
 
 
 var chosen_palet = {
   container: d3.select('svg').append('g').attr('class', 'choosed_palet'),
-  x: 50,
-  y: 450,
+  x: 10,
+  y: 275,
   width: 30,
   height: 10,
   max_length: 7,

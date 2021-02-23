@@ -1,7 +1,9 @@
+var isBricks = false;
+
 function gridData() {
 	var data = new Array();
 	var xpos = 1; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
-	var ypos = 500;
+	var ypos = 10;
 	var width = 10;
 	var height = 10;
 	var click = 0;
@@ -11,7 +13,7 @@ function gridData() {
 		data.push( new Array() );
 		
 		// iterate for cells/columns inside rows
-		for (var column = 0; column < 100; column++) {
+		for (var column = 0; column < 101; column++) {
 			data[row].push({
 				x: xpos,
 				y: ypos,
@@ -23,11 +25,32 @@ function gridData() {
 			xpos += width;
 		}
 		// reset the x position after a row is complete
-		xpos = 1;
+		if (row%2 == 1 || !isBricks){
+			xpos = 1;
+		} else {
+			xpos = -4;
+		}
 		// increment the y position for the next row. Move it down 50 (height variable)
 		ypos += height;	
 	}
 	return data;
+}
+
+function updateGrid() {
+	console.log("updateGrid() occurred")
+
+	isBricks = !isBricks;
+
+	d3.selectAll(".square").attr("x", function(d) {
+		if(!(d.y % 20)) { 
+			if(isBricks){
+				d.x = d.x + 5;
+			} else {
+				d.x = d.x - 5;
+			}
+		}
+		return d.x;
+	})
 }
 
 var gridData = gridData();	
@@ -37,7 +60,7 @@ console.log(gridData);
 var grid = d3.select("#grid")
 	.append("svg")
 	.attr("x","500px")
-	.attr("width","1000px")
+	.attr("width","1001px")
 	.attr("height","1500px");
 	
 var row = grid.selectAll(".row")
